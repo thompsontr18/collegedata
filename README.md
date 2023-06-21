@@ -1,3 +1,4 @@
-# placeholdername
+# College Data
 
-Add project information here
+Inside this repository is a Python script that will give the user all majors, and courses within that major, for any college that is supplied.
+
