@@ -5,10 +5,9 @@ import pandas as pd
 from openpyxl import load_workbook
 
 
-
 def googlesearch():
     query = input("What would you like to search for? ")
-    for j in search(query, tld="co.in", stop=1, pause=2):
+    for j in search(query, tld="com", stop=1, pause=2):
         return j
 
 
@@ -16,7 +15,8 @@ url = googlesearch()
 print(url)
 html = requests.get(url)
 soup = BeautifulSoup(html.text, "html.parser")
-print(soup.text)
+#print(soup.text)
 
-
-
+atags = soup.findAll("a", href=True)
+for atag in atags:
+    print(atag.text)
