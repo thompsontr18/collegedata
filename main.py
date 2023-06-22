@@ -31,4 +31,5 @@ for major in listofmajors:
 
 nlp = en_core_web_sm.load()
 doc = nlp("This is a sentence.")
+#Code below prints out each word in sentence, along with the part of speech they are
 print([(w.text, w.pos_) for w in doc])
