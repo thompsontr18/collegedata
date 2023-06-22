@@ -1,47 +1,34 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-from openpyxl import load_workbook
 from googlesearch import search
+import spacy
+import en_core_web_sm
 
 
-#---------------------------------------------------------------------------------
-def namechange(colname):
-    name = colname.replace(" - ","-")
-    name = name.replace(" -- ", "-")
-    name = name.replace("- ", "-")
-    name = name.replace(", ", "-")
-    name = name.replace("/", "-")
-    name = name.replace(" ", "-")
-    name = "https://waf.collegedata.com/college-search/"+name+"/academics"
-    r = requests.get(name)
-    if r.status_code != 404:
-        return name
-    else:
-        return None
-#---------------------------------------------------------------------------------
 def googlesearch(query):
     for j in search(query, tld="com", stop=1, pause=2):
         return j
-#---------------------------------------------------------------------------------
 
+'''
 cname = input("Enter the name of a college: ")
-
-url = namechange(cname)
-print("URL we are scraping from")
-print(url)
+cname = "petersons college search" + cname
 
 collegewebsite = googlesearch(cname)
-print("College's official URL")
 print(collegewebsite)
 
-html = requests.get(url)
+
+html = requests.get(collegewebsite)
 soup = BeautifulSoup(html.text, "html.parser")
-listofmajors = soup.findAll("div", attrs={"class":"SubscreenNavigator_modalData__1xYUK"})
+print(soup.text)
+listofmajors = soup.findAll("th", attrs={"class": "top-level"})
+
 for major in listofmajors:
     print(major.text)
+'''
 
-li = soup.findAll("div", attrs={"class":"TitleValue_value__1JT0d"})
-for l in li:
-    print(l.text)
 
+
+nlp = en_core_web_sm.load()
+doc = nlp("This is a sentence.")
+print([(w.text, w.pos_) for w in doc])
