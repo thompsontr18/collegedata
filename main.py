@@ -30,6 +30,15 @@ for major in listofmajors:
 
 
 nlp = en_core_web_sm.load()
-doc = nlp("This is a sentence.")
-#Code below prints out each word in sentence, along with the part of speech they are
-print([(w.text, w.pos_) for w in doc])
+text = ("When Sebastian Thrun started working on self-driving cars at Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn’t worth talking to, said Thrun, in an interview with Recode earlier this week.")
+doc = nlp(text)
+
+#gets parts of speech
+print("Noun phrases:", [chunk.text for chunk in doc.noun_chunks])
+print("\n")
+print("Verbs:", [token.lemma_ for token in doc if token.pos_ == "VERB"])
+print("\n")
+
+#understands people, places, things, etc
+for entity in doc.ents:
+    print(entity.text, entity.label_)
