@@ -11,10 +11,19 @@ def googlesearch(query):
 
 
 cname = input("Enter the name of a college: ")
+altcname = cname + " faculty and staff"
 cname += " faculty and staff directory"
+
+
 
 collegewebsite = googlesearch(cname)
 print(collegewebsite)
+
+
+alternatecollegewebsite = googlesearch(altcname)
+althtml = requests.get(alternatecollegewebsite)
+altsoup = BeautifulSoup(althtml.text, "html.parser")
+alttext = altsoup.text
 
 
 html = requests.get(collegewebsite)
@@ -33,5 +42,23 @@ emailmatch = re.findall(email, text)
 if emailmatch:
     emailmatches.extend(emailmatch)
 
-for pnm, em in zip(phonenumbermatches, emailmatches):
-    print(pnm,em)
+
+altpmatches = []
+altematches = []
+altphonematch = re.findall(phonenumber, alttext)
+if altphonematch:
+    altpmatches.extend(altphonematch)
+altemailmatch = re.findall(email, alttext)
+if altemailmatch:
+    altematches.extend(altemailmatch)
+
+
+if len(altematches) + len(altpmatches) > len(emailmatches) + len(phonenumbermatches):
+    print(alternatecollegewebsite)
+    for pnm, em in zip(altematches, altpmatches):
+        print(pnm, em)
+
+else:
+    print(collegewebsite)
+    for pnm, em in zip(phonenumbermatches, emailmatches):
+        print(pnm,em)
