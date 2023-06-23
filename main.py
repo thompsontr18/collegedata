@@ -15,17 +15,13 @@ altcname = cname + " faculty and staff"
 cname += " faculty and staff directory"
 
 
-
-collegewebsite = googlesearch(cname)
-print(collegewebsite)
-
-
 alternatecollegewebsite = googlesearch(altcname)
 althtml = requests.get(alternatecollegewebsite)
 altsoup = BeautifulSoup(althtml.text, "html.parser")
 alttext = altsoup.text
 
 
+collegewebsite = googlesearch(cname)
 html = requests.get(collegewebsite)
 soup = BeautifulSoup(html.text, "html.parser")
 text = soup.text
@@ -53,12 +49,17 @@ if altemailmatch:
     altematches.extend(altemailmatch)
 
 
+print(text)
+print('------------------------------------------------------------------------------------------')
+print(alttext)
+
+
 if len(altematches) + len(altpmatches) > len(emailmatches) + len(phonenumbermatches):
-    print(alternatecollegewebsite)
-    for pnm, em in zip(altematches, altpmatches):
+    print(alternatecollegewebsite, " alternate")
+    for pnm, em in zip(altpmatches, altematches):
         print(pnm, em)
 
 else:
-    print(collegewebsite)
+    print(collegewebsite, " original")
     for pnm, em in zip(phonenumbermatches, emailmatches):
         print(pnm,em)
