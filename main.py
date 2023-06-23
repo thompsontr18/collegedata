@@ -24,7 +24,6 @@ text = soup.text
 phonenumber = r'\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{4}'
 phonenumbermatches = []
 email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
-#email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(?:com|edu|gov)\b'
 emailmatches = []
 
 phonematch = re.findall(phonenumber, text)
@@ -36,4 +35,3 @@ if emailmatch:
 
 for pnm, em in zip(phonenumbermatches, emailmatches):
     print(pnm,em)
-    
