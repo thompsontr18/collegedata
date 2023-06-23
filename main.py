@@ -49,10 +49,6 @@ if altemailmatch:
     altematches.extend(altemailmatch)
 
 
-print(text)
-print('------------------------------------------------------------------------------------------')
-print(alttext)
-
 
 if len(altematches) + len(altpmatches) > len(emailmatches) + len(phonenumbermatches):
     print(alternatecollegewebsite, " alternate")
