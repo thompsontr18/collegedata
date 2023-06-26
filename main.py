@@ -45,7 +45,6 @@ if len(altematches) + len(altpmatches) > len(emailmatches) + len(phonenumbermatc
     print(alternatecollegewebsite, " alternate")
     for pnm, em in zip(altpmatches, altematches):
         print(pnm, em)
-
 else:
     print(collegewebsite, " original")
     for pnm, em in zip(phonenumbermatches, emailmatches):
