@@ -11,9 +11,7 @@ def googlesearch(query):
 
 
 cname = input("Enter the name of a college: ")
-
 cname += " professor"
-
 
 
 collegewebsite = googlesearch(cname)
