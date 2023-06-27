@@ -13,6 +13,7 @@ def googlesearch(query):
 
 df = pd.read_excel('data.xlsx', usecols='A,B,C')
 
+
 major = ""
 for i in range(len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1]) + " " + str(df.iloc[i, 2]) 
@@ -25,11 +26,16 @@ for i in range(len(df)):
     soup = BeautifulSoup(html.text, "html.parser")
     text = soup.text
 
-    email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
+    emailre = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
     emailmatches = []
-    emailmatches = re.findall(email, text)
+    emailmatches = re.findall(emailre, text)
 
 
-    for em in emailmatches:
-        print(em)
+    listofemails = []
+    for email in emailmatches:
+        if email in listofemails:
+            continue
+        else:
+            print(email)
+            listofemails.append(email)
     
