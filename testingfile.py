@@ -15,13 +15,19 @@ df = pd.read_excel('data.xlsx', usecols='A,B,C')
 
 
 major = ""
+collegeandmajor = {}
 for i in range(len(df)):
-    srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1]) + " " + str(df.iloc[i, 2]) 
+    srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
+    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor.keys():
+        continue
     link = googlesearch(srch)
     if major != df.iloc[i, 1]:
         print('-----------------------------------')
         print(df.iloc[i, 1])
         major = df.iloc[i, 1]
+        collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])] = 1
+
+
     html = requests.get(link)
     soup = BeautifulSoup(html.text, "html.parser")
     text = soup.text
@@ -31,11 +37,13 @@ for i in range(len(df)):
     emailmatches = re.findall(emailre, text)
 
 
-    listofemails = []
-    for email in emailmatches:
-        if email in listofemails:
-            continue
+    if len(emailmatches) == 0:
+        print("N/A")
+        continue
+    printedtext = ""
+    for i in range(0,len(emailmatches)):
+        if i != len(emailmatches)-1:
+            printedtext += emailmatches[i] + ", "
         else:
-            print(email)
-            listofemails.append(email)
-    
+            printedtext += emailmatches[i]
+    print(printedtext)
