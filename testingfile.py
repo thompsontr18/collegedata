@@ -11,23 +11,29 @@ def googlesearch(query):
 
 
 cname = input("Enter the name of a college: ")
-cname += " professor"
 
 
-collegewebsite = googlesearch(cname)
-html = requests.get(collegewebsite)
-soup = BeautifulSoup(html.text, "html.parser")
-text = soup.text
-
-phonenumber = r'\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{4}'
-phonenumbermatches = []
-email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
-emailmatches = []
-
-phonenumbermatches = re.findall(phonenumber, text)
-emailmatches = re.findall(email, text)
+df = pd.read_excel('data.xlsx', usecols='A,B,C')
 
 
-print(collegewebsite)
-for pnm, em in zip(phonenumbermatches, emailmatches):
-    print(pnm,em)
+for i in range(len(df)):
+    if str(df.iloc[i, 0]) == cname.title():
+
+        srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1]) + " " + str(df.iloc[i, 2]) 
+        #print(srch)
+
+
+        link = googlesearch(srch)
+        print(link)
+        html = requests.get(link)
+        soup = BeautifulSoup(html.text, "html.parser")
+        text = soup.text
+
+
+        email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
+        emailmatches = []
+        emailmatches = re.findall(email, text)
+
+
+        for em in emailmatches:
+            print(em)
