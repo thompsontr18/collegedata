@@ -13,11 +13,14 @@ def googlesearch(query):
 
 df = pd.read_excel('data.xlsx', usecols='A,B,C')
 
-
+major = ""
 for i in range(len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1]) + " " + str(df.iloc[i, 2]) 
     link = googlesearch(srch)
-    print(df.iloc[i, 1])
+    if major != df.iloc[i, 1]:
+        print('-----------------------------------')
+        print(df.iloc[i, 1])
+        major = df.iloc[i, 1]
     html = requests.get(link)
     soup = BeautifulSoup(html.text, "html.parser")
     text = soup.text
@@ -29,4 +32,4 @@ for i in range(len(df)):
 
     for em in emailmatches:
         print(em)
-    print('-----------------------------------')
+    
