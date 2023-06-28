@@ -18,8 +18,9 @@ major = ""
 collegeandmajor = {}
 for i in range(len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
-    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor.keys():
+    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor:
         continue
+    srch += " program contact"
     link = googlesearch(srch)
     if major != df.iloc[i, 1]:
         print('-----------------------------------')
