@@ -39,10 +39,11 @@ for i in range(len(df)):
 
 
     strings = ""
-    for words in text:
-        strings += words
-        if "@" in words:
+    for i in range(len(text)):
+        strings += text[i]
+        if "@" in text[i]:
             strings = strings[-150:]
+            strings += text[i+1:i+50]
             print(strings)
 
 
