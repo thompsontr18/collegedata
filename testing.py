@@ -5,6 +5,7 @@ from googlesearch import search
 import re
 
 
+
 def googlesearch(query):
     for j in search(query, tld="com", stop=1, pause=2):
         return j
@@ -12,6 +13,7 @@ def googlesearch(query):
 
 
 df = pd.read_excel('data.xlsx', usecols='A,B,C')
+
 
 
 major = ""
@@ -57,3 +59,9 @@ for i in range(len(df)):
         else:
             printedtext += emailmatches[i]
     print(printedtext)
+
+
+
+
+
+
