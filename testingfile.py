@@ -18,8 +18,11 @@ major = ""
 collegeandmajor = {}
 for i in range(len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
-    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor.keys():
+    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor:
         continue
+    if df.iloc[i, 0] == "Albany Technical College" or df.iloc[i, 0] == "Andrew College":
+        continue
+    srch += " program contact"
     link = googlesearch(srch)
     if major != df.iloc[i, 1]:
         print('-----------------------------------')
@@ -35,6 +38,14 @@ for i in range(len(df)):
     emailre = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
     emailmatches = []
     emailmatches = re.findall(emailre, text)
+
+
+    strings = ""
+    for words in text:
+        strings += words
+        if "@" in words:
+            strings = strings[-150:]
+            print(strings)
 
 
     if len(emailmatches) == 0:
