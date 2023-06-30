@@ -21,14 +21,18 @@ sheet=book.worksheets[0]
 major = ""
 collegeandmajor = {}
 
-count=0
-for i in range(len(df)):
+
+#for i in range(len(df)):
+for i in range(6500, 10000):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
+    if df.iloc[i, 1] == "PLBG" and df.iloc[i, 0] == "Central Georgia Technical College":
+        df_print.loc[len(df_print.index)] = ["N/A",""]
     srch += " program contact"
     if srch in collegeandmajor:
         df_print.loc[len(df_print.index)] = collegeandmajor[srch]
         continue
-    print(srch)
+    print(df.iloc[i, 0])
+    #print(srch)
     link = googlesearch(srch)
     if major != df.iloc[i, 1]:
         print('-----------------------------------')
@@ -37,7 +41,7 @@ for i in range(len(df)):
         # collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])] = 1
 
 
-    html = requests.get(link)
+    html = requests.get(link, verify=False)
     soup = BeautifulSoup(html.text, "html.parser")
     text = soup.text
 
@@ -52,11 +56,11 @@ for i in range(len(df)):
         if "@" in text[i]:
             # strings = strings[-150:]
             strings = text[i-150:i+50]
-            print(strings)
+            #print(strings)
 
 
     if len(emailmatches) == 0:
-        print("N/A")
+        #print("N/A")
         df_print.loc[len(df_print.index)] = ["N/A",strings]
         collegeandmajor[srch] = ["N/A",strings]
         continue
@@ -66,16 +70,14 @@ for i in range(len(df)):
             printedtext += emailmatches[i] + ", "
         else:
             printedtext += emailmatches[i]
-    print(printedtext)
+    #print(printedtext)
     df_print.loc[len(df_print.index)] = [printedtext,strings]
     
     collegeandmajor[srch] = [printedtext,strings]
-    if count==5:
-        break
-    count+=1
-print(collegeandmajor)
+
+df_print = df_print.applymap(lambda x: x.encode('unicode_escape').decode('utf-8') if isinstance(x, str) else x)
 with pd.ExcelWriter('dataWithEmail.xlsx',mode='a', if_sheet_exists='overlay') as writer:  
-    df_print.to_excel(writer,sheet_name="Sheet",header=True, index=False, startrow=sheet.max_row)
+    df_print.to_excel(writer,sheet_name="Sheet1",header=False, index=False, startrow=sheet.max_row)
 
 
 
