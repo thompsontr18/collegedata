@@ -20,12 +20,15 @@ sheet=book.worksheets[0]
 
 major = ""
 collegeandmajor = {}
+
+count=0
 for i in range(len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
-    if (df.iloc[i, 0], df.iloc[i, 1]) in collegeandmajor:
-        df_print.loc[len(df_print.index)] = collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])]
-        continue
     srch += " program contact"
+    if srch in collegeandmajor:
+        df_print.loc[len(df_print.index)] = collegeandmajor[srch]
+        continue
+    print(srch)
     link = googlesearch(srch)
     if major != df.iloc[i, 1]:
         print('-----------------------------------')
@@ -55,7 +58,7 @@ for i in range(len(df)):
     if len(emailmatches) == 0:
         print("N/A")
         df_print.loc[len(df_print.index)] = ["N/A",strings]
-        collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])] = ["N/A",strings]
+        collegeandmajor[srch] = ["N/A",strings]
         continue
     printedtext = ""
     for i in range(0,len(emailmatches)):
@@ -65,7 +68,12 @@ for i in range(len(df)):
             printedtext += emailmatches[i]
     print(printedtext)
     df_print.loc[len(df_print.index)] = [printedtext,strings]
-    collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])] = [printedtext,strings]
+    
+    collegeandmajor[srch] = [printedtext,strings]
+    if count==5:
+        break
+    count+=1
+print(collegeandmajor)
 with pd.ExcelWriter('dataWithEmail.xlsx',mode='a', if_sheet_exists='overlay') as writer:  
     df_print.to_excel(writer,sheet_name="Sheet",header=True, index=False, startrow=sheet.max_row)
 
