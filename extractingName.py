@@ -23,6 +23,7 @@ collegeandmajor = {}
 
 
 #for i in range(len(df)):
+#HAVE NOT RAN THIS ONE YET
 for i in range(6500, 10000):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
     if df.iloc[i, 1] == "PLBG" and df.iloc[i, 0] == "Central Georgia Technical College":
