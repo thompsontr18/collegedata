@@ -26,11 +26,14 @@ collegeandmajor = {}
 
 #for i in range(len(df)):
 #HAVE NOT RAN THIS ONE YET
-for i in range(6500, 8500):
+for i in range(18000, len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
-    if df.iloc[i, 1] == "PLBG" and df.iloc[i, 0] == "Central Georgia Technical College":
+    if df.iloc[i, 0] == "Wiregrass Georgia Technical College":
         df_print.loc[len(df_print.index)] = ["N/A",""]
         continue
+    # if df.iloc[i, 1] == "ACCT" and df.iloc[i, 0] == "Wiregrass Georgia Technical College":
+    #     df_print.loc[len(df_print.index)] = ["N/A",""]
+    #     continue
     srch += " program contact"
     if srch in collegeandmajor:
         df_print.loc[len(df_print.index)] = collegeandmajor[srch]
