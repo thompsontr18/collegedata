@@ -4,10 +4,12 @@ import pandas as pd
 from googlesearch import search
 import re
 from openpyxl import load_workbook
+import time
 
 
 
 def googlesearch(query):
+    time.sleep(0.01)
     for j in search(query, tld="com", stop=1, pause=2):
         return j
 
@@ -24,10 +26,11 @@ collegeandmajor = {}
 
 #for i in range(len(df)):
 #HAVE NOT RAN THIS ONE YET
-for i in range(6500, 10000):
+for i in range(6500, 8500):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
     if df.iloc[i, 1] == "PLBG" and df.iloc[i, 0] == "Central Georgia Technical College":
         df_print.loc[len(df_print.index)] = ["N/A",""]
+        continue
     srch += " program contact"
     if srch in collegeandmajor:
         df_print.loc[len(df_print.index)] = collegeandmajor[srch]
@@ -41,7 +44,7 @@ for i in range(6500, 10000):
         major = df.iloc[i, 1]
         # collegeandmajor[(df.iloc[i, 0], df.iloc[i, 1])] = 1
 
-
+    time.sleep(0.01)
     html = requests.get(link, verify=False)
     soup = BeautifulSoup(html.text, "html.parser")
     text = soup.text
