@@ -25,7 +25,6 @@ collegeandmajor = {}
 
 
 #for i in range(len(df)):
-#HAVE NOT RAN THIS ONE YET
 for i in range(18000, len(df)):
     srch = str(df.iloc[i, 0]) + " " + str(df.iloc[i, 1])
     if df.iloc[i, 0] == "Wiregrass Georgia Technical College":
@@ -85,7 +84,6 @@ for i in range(18000, len(df)):
 df_print = df_print.applymap(lambda x: x.encode('unicode_escape').decode('utf-8') if isinstance(x, str) else x)
 with pd.ExcelWriter('dataWithEmail.xlsx',mode='a', if_sheet_exists='overlay') as writer:  
     df_print.to_excel(writer,sheet_name="Sheet1",header=False, index=False, startrow=sheet.max_row)
-
 
 
 
